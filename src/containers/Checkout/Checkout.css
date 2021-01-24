@@ -14,11 +14,6 @@
 .checkoutTable thead td {
   font-weight: bold;
 }
-@media (max-width: 600px) {
-  .checkoutTable td {
-    font-size: 14px;
-  }
-}
 
 .backDrop {
   width: 100%;
@@ -39,9 +34,15 @@
   box-shadow: 1px 1px 1px black;
   padding: 16px;
   left: 15%;
-  top: 30%;
+  top: 20%;
   box-sizing: border-box;
   transition: all 0.3s ease-out;
+}
+
+.transactionContainer {
+  background: lightgreen;
+  padding: 10px;
+  text-align: center;
 }
 
 @media (min-width: 600px) {
@@ -51,8 +52,8 @@
   }
 }
 
-.transactionContainer {
-  background: lightgreen;
-  padding: 10px;
-  text-align: center;
+@media (max-width: 600px) {
+  .checkoutTable td {
+    font-size: 14px;
+  }
 }

@@ -34,35 +34,37 @@ const Checkout = (props) => {
             <FontAwesomeIcon icon={faCheckCircle} color="green" />
             <i style={{ paddingLeft: "10px" }}>Your Transaction is Completed</i>
           </div>
-          <table className="checkoutTable">
-            <thead>
-              <tr>
-                <td className="item">Item</td>
-                <td>Quantity</td>
-                <td>Subtotal</td>
-              </tr>
-            </thead>
-            <tbody>
-              {checkoutProducts.map((product) =>
-                Object.entries(product).map(([key, value]) => (
-                  <tr key={key}>
-                    <td className="item">{value.name}</td>
-                    <td>{value.quantity}</td>
-                    <td>{value.itemTotal}</td>
-                  </tr>
-                ))
-              )}
-              <tr>
-                <td></td>
-                <td>
-                  <i>
-                    <b>Total</b>
-                  </i>
-                </td>
-                <td>{props.total}</td>
-              </tr>
-            </tbody>
-          </table>
+          <div style={{ height: "200px", overflow: "auto" }}>
+            <table className="checkoutTable">
+              <thead>
+                <tr className="tableContent">
+                  <td className="item">Item</td>
+                  <td>Quantity</td>
+                  <td>Subtotal</td>
+                </tr>
+              </thead>
+              <tbody>
+                {checkoutProducts.map((product) =>
+                  Object.entries(product).map(([key, value]) => (
+                    <tr key={key} className="tableContent">
+                      <td className="item">{value.name}</td>
+                      <td>{value.quantity}</td>
+                      <td>{value.itemTotal}</td>
+                    </tr>
+                  ))
+                )}
+                <tr className="tableContent">
+                  <td></td>
+                  <td>
+                    <i>
+                      <b>Total</b>
+                    </i>
+                  </td>
+                  <td>{props.total}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <div
             style={{
               display: "flex",

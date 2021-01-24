@@ -14,9 +14,9 @@ class ShoppingCart extends Component {
     this.state = {
       products: [],
       quantity: 0,
-      localQuantity: { milkFood: 0, motherChoice: 0, amul: 0, patanjali: 0 },
+      localQuantity: {},
       total: 0,
-      localTotal: { milkFood: 0, motherChoice: 0, amul: 0, patanjali: 0 },
+      localTotal: {},
       modal: false,
       backDrop: false,
       checkoutData: null,
@@ -66,10 +66,18 @@ class ShoppingCart extends Component {
     products[index][key].itemTotal =
       products[index][key].itemTotal + products[index][key].discountPrice;
     const localQuantity = { ...this.state.localQuantity };
-    localQuantity[key] = this.state.localQuantity[key] + 1;
+    if (localQuantity[key] === undefined) {
+      localQuantity[key] = 1;
+    } else {
+      localQuantity[key] = this.state.localQuantity[key] + 1;
+    }
     const localTotal = { ...this.state.localTotal };
-    localTotal[key] =
-      this.state.localTotal[key] + products[index][key].discountPrice;
+    if (localTotal[key] === undefined) {
+      localTotal[key] = products[index][key].discountPrice;
+    } else {
+      localTotal[key] =
+        this.state.localTotal[key] + products[index][key].discountPrice;
+    }
     this.setState(
       {
         localQuantity: localQuantity,
@@ -138,9 +146,9 @@ class ShoppingCart extends Component {
     this.setState({
       modal: false,
       quantity: 0,
-      localQuantity: { milkFood: 0, motherChoice: 0, amul: 0, patanjali: 0 },
+      localQuantity: {},
       total: 0,
-      localTotal: { milkFood: 0, motherChoice: 0, amul: 0, patanjali: 0 },
+      localTotal: {},
     });
     setTimeout(() => {
       this.setState({ backDrop: false });
@@ -148,7 +156,6 @@ class ShoppingCart extends Component {
   };
 
   render() {
-    console.log(this.state.products);
     return (
       <div>
         {this.state.backDrop ? (
@@ -162,7 +169,7 @@ class ShoppingCart extends Component {
           />
         ) : null}
         <div className="productContainer">
-          <h2>Dairy Products</h2>
+          <h2>Groceries</h2>
           <div className="cardView customWidth">
             {this.state.products.length > 0 ? (
               this.state.products.map((product, index) =>
@@ -174,13 +181,11 @@ class ShoppingCart extends Component {
                       offer={value.offer}
                     />
                     <div className="productContentContainer">
-                      <div className="name">{value.name}</div>
-                      <div className="description">{value.description}</div>
-                      <div className="description">1L</div>
-                      <div className="description">MRP {value.price}</div>
-                      <div className="discountPrice">
-                        RS {value.discountPrice}
-                      </div>
+                      <p className="name">{value.name}</p>
+                      <p className="description">{value.description}</p>
+                      <p className="description">{value.type}</p>
+                      <p className="description">MRP {value.price}</p>
+                      <p className="discountPrice">Rs {value.discountPrice}</p>
                       <div className="buttonContainer">
                         <NormalButton
                           title="add cart"
@@ -192,7 +197,9 @@ class ShoppingCart extends Component {
                             action={() => this.reducePrice(key, index)}
                           />
                           <p style={{ padding: "0px 10px" }}>
-                            {this.state.localQuantity[key]}
+                            {this.state.localQuantity[key]
+                              ? this.state.localQuantity[key]
+                              : 0}
                           </p>
                           <IconButton
                             iconName={faPlus}
